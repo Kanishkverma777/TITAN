@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -22,7 +22,7 @@ const Sidebar = () => {
         }
     }
 
-    const gymDetails = JSON.parse(localStorage.getItem('gymDetails') || '{}');
+
 
     return (
         <div className='w-72 h-screen bg-titan-black text-white p-8 flex flex-col border-r border-titan-grey'>

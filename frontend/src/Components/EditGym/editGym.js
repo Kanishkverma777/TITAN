@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
 
 const EditGym = ({ handleClose }) => {

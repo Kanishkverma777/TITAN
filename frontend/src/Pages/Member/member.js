@@ -29,11 +29,11 @@ const Member = () => {
 
     useEffect(() => {
         fetchData(startFrom, limit);
-    }, [currentPage])
+    }, [currentPage]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchData = async (skip, limits) => {
         try {
-            const response = await axios.get(`http://localhost:4000/members/all-member?skip=${skip}&limit=${limits}`, { withCredentials: true });
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/members/all-member?skip=${skip}&limit=${limits}`, { withCredentials: true });
             setData(response.data.members);
             setTotalData(response.data.totalMember);
             setIsSearchModeOn(false);
@@ -69,7 +69,7 @@ const Member = () => {
             return;
         }
         try {
-            const response = await axios.get(`http://localhost:4000/members/search?searchTerm=${search}`, { withCredentials: true });
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/members/search?searchTerm=${search}`, { withCredentials: true });
             setData(response.data.members);
             setTotalData(response.data.members.length);
             setIsSearchModeOn(true);

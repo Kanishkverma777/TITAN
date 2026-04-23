@@ -1,5 +1,4 @@
 import React from 'react'
-import CircleIcon from '@mui/icons-material/Circle';
 import { Link } from 'react-router-dom';
 
 const MemberCard = ({item}) => {

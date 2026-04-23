@@ -18,7 +18,7 @@ const MemberDetail = () => {
     useEffect(() => {
         fetchData();
         fetchMembership();
-    }, [])
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
     const fetchMembership = async () => {
         try {
@@ -31,7 +31,7 @@ const MemberDetail = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/members/member-details/${id}`, { withCredentials: true });
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/members/member-details/${id}`, { withCredentials: true });
             setData(response.data.member);
             setStatus(response.data.member.status);
             setPlanMember(response.data.member.membership?._id || "");
@@ -44,7 +44,7 @@ const MemberDetail = () => {
     const handleSwitchBtn = async () => {
         const newStatus = status === "Active" ? "Pending" : "Active";
         try {
-            await axios.put(`http://localhost:4000/members/change-status/${id}`, { status: newStatus }, { withCredentials: true });
+            await axios.put(`${process.env.REACT_APP_API_URL}/members/change-status/${id}`, { status: newStatus }, { withCredentials: true });
             setStatus(newStatus);
             toast.success(`Status changed to ${newStatus}`);
         } catch (err) {
@@ -55,7 +55,7 @@ const MemberDetail = () => {
     const handleDeleteMember = async () => {
         if (window.confirm("Are you sure you want to delete this member? This action cannot be undone.")) {
             try {
-                const response = await axios.delete(`http://localhost:4000/members/delete-member/${id}`, { withCredentials: true });
+                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/members/delete-member/${id}`, { withCredentials: true });
                 if (response.status === 200) {
                     toast.success("Member Deleted successfully");
                     setTimeout(() => {
@@ -85,7 +85,7 @@ const MemberDetail = () => {
             return;
         }
         try {
-            const response = await axios.put(`http://localhost:4000/members/update-plan/${id}`, { membership: planMember }, { withCredentials: true });
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/members/update-plan/${id}`, { membership: planMember }, { withCredentials: true });
             if (response.status === 200) {
                 toast.success("Membership Renewed!");
                 setRenew(false);

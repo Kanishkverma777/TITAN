@@ -45,7 +45,7 @@ const AddmemberShip = ({ handleClose }) => {
     const handleRemovePlan = async (id) => {
         if (window.confirm("Are you sure you want to remove this plan?")) {
             try {
-                const response = await axios.delete(`http://localhost:4000/plans/delete-membership/${id}`, { withCredentials: true });
+                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/plans/delete-membership/${id}`, { withCredentials: true });
                 if (response.status === 200) {
                     toast.success("Plan removed successfully");
                     fetchMembership();
