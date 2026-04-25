@@ -88,67 +88,67 @@ const Member = () => {
     }
 
     return (
-        <div className='w-full bg-titan-black text-white p-10 relative h-screen overflow-y-auto custom-scrollbar uppercase tracking-tighter'>
+        <div className='w-full bg-titan-black text-white p-6 md:p-10 relative h-screen overflow-y-auto custom-scrollbar uppercase tracking-tighter pb-24 md:pb-10'>
 
-            <div className='bg-titan-dark border border-titan-grey flex flex-col md:flex-row shadow-2xl justify-between w-full rounded-[32px] p-8 gap-8 items-center'>
-                <div className='flex gap-4 w-full md:w-auto'>
-                    <div className='bg-titan-lime text-black px-8 py-4 rounded-full cursor-pointer hover:scale-105 transition-all font-black text-xs flex items-center gap-2 shadow-lg shadow-titan-lime/20' onClick={() => handleMembers()}>
-                        <FitnessCenterIcon fontSize="small" /> ADD MEMBER 
+            <div className='bg-titan-dark border border-titan-grey flex flex-col md:flex-row shadow-2xl justify-between w-full rounded-[24px] md:rounded-[32px] p-6 md:p-8 gap-4 md:gap-8 items-center'>
+                <div className='flex gap-3 md:gap-4 w-full md:w-auto'>
+                    <div className='bg-titan-lime text-black px-5 md:px-8 py-3 md:py-4 rounded-full cursor-pointer hover:scale-105 transition-all font-black text-[10px] md:text-xs flex items-center gap-2 shadow-lg shadow-titan-lime/20 flex-1 md:flex-none justify-center' onClick={() => handleMembers()}>
+                        <FitnessCenterIcon sx={{ fontSize: { xs: "16px", md: "20px" } }} /> ADD MEMBER 
                     </div>
-                    <div className='bg-titan-grey border border-white/5 text-white px-8 py-4 rounded-full cursor-pointer hover:bg-white hover:text-black transition-all font-bold text-xs flex items-center gap-2' onClick={() => handleMemberShip()}>
-                        <AddIcon fontSize="small" /> NEW PLAN 
+                    <div className='bg-titan-grey border border-white/5 text-white px-5 md:px-8 py-3 md:py-4 rounded-full cursor-pointer hover:bg-white hover:text-black transition-all font-bold text-[10px] md:text-xs flex items-center gap-2 flex-1 md:flex-none justify-center' onClick={() => handleMemberShip()}>
+                        <AddIcon sx={{ fontSize: { xs: "16px", md: "20px" } }} /> NEW PLAN 
                     </div>
                 </div>
                 
-                <div className='flex gap-2 bg-titan-black border border-titan-grey rounded-2xl overflow-hidden focus-within:border-titan-lime transition-all w-full md:w-[450px] p-2'>
+                <div className='flex gap-2 bg-titan-black border border-titan-grey rounded-xl md:rounded-2xl overflow-hidden focus-within:border-titan-lime transition-all w-full md:w-[450px] p-2'>
                     <input 
                         type='text' 
                         value={search} 
                         onChange={(e) => { setSearch(e.target.value) }} 
-                        className='bg-transparent w-full px-4 outline-none text-xs font-black placeholder-titan-muted tracking-widest' 
+                        className='bg-transparent w-full px-3 md:px-4 outline-none text-[10px] md:text-xs font-black placeholder-titan-muted tracking-widest' 
                         placeholder='SEARCH BY NAME OR MOBILE...' 
                     />
-                    <button onClick={() => { handleSearchData() }} className='bg-titan-grey w-12 h-12 rounded-xl hover:bg-titan-lime hover:text-black transition-all flex items-center justify-center'>
-                        <SearchIcon fontSize="small" />
+                    <button onClick={() => { handleSearchData() }} className='bg-titan-grey w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl hover:bg-titan-lime hover:text-black transition-all flex items-center justify-center flex-shrink-0'>
+                        <SearchIcon sx={{ fontSize: { xs: "18px", md: "20px" } }} />
                     </button>
                 </div>
             </div>
 
-            <div className='mt-12 mb-8'>
-                <Link to={'/dashboard'} className='text-titan-muted hover:text-titan-lime transition-all font-black text-[10px] uppercase tracking-[0.4em] flex items-center gap-2'>
-                    <ArrowBackIcon fontSize="small" /> BACK TO PERFORMANCE
+            <div className='mt-8 md:mt-12 mb-6 md:mb-8'>
+                <Link to={'/dashboard'} className='text-titan-muted hover:text-titan-lime transition-all font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] flex items-center gap-2'>
+                    <ArrowBackIcon sx={{ fontSize: { xs: "16px", md: "20px" } }} /> BACK TO PERFORMANCE
                 </Link>
             </div>
 
-            <div className='text-4xl font-heading font-black flex justify-between items-end text-white border-b border-titan-grey pb-8 mb-12 uppercase tracking-tighter'>
-                <div>MEMBER BASE <span className='text-titan-lime ml-2 text-2xl'>{totalData}</span></div>
+            <div className='text-2xl md:text-4xl font-heading font-black flex justify-between items-end text-white border-b border-titan-grey pb-6 md:pb-8 mb-8 md:mb-12 uppercase tracking-tighter'>
+                <div>MEMBER BASE <span className='text-titan-lime ml-1 md:ml-2 text-lg md:text-2xl'>{totalData}</span></div>
                 {!isSearchModeOn && (
-                    <div className='flex gap-6 items-center text-[10px] font-black tracking-[0.3em] text-titan-muted'>
-                        <div>{startFrom + 1}—{Math.min(startFrom + limit, totalData)} OF {totalData}</div>
-                        <div className='flex gap-3'>
-                            <div className={`w-12 h-12 cursor-pointer border border-titan-grey flex items-center justify-center rounded-2xl hover:bg-titan-lime hover:text-black hover:border-titan-lime transition-all ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : ''}`} onClick={handlePrev}><ChevronLeftIcon /></div>
-                            <div className={`w-12 h-12 cursor-pointer border border-titan-grey flex items-center justify-center rounded-2xl hover:bg-titan-lime hover:text-black hover:border-titan-lime transition-all ${currentPage === noOfPage ? 'opacity-20 cursor-not-allowed' : ''}`} onClick={handleNext}><ChevronRightIcon /></div>
+                    <div className='flex gap-3 md:gap-6 items-center text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] text-titan-muted'>
+                        <div className='hidden sm:block'>{startFrom + 1}—{Math.min(startFrom + limit, totalData)} OF {totalData}</div>
+                        <div className='flex gap-2 md:gap-3'>
+                            <div className={`w-9 h-9 md:w-12 md:h-12 cursor-pointer border border-titan-grey flex items-center justify-center rounded-xl md:rounded-2xl hover:bg-titan-lime hover:text-black hover:border-titan-lime transition-all ${currentPage === 1 ? 'opacity-20 cursor-not-allowed' : ''}`} onClick={handlePrev}><ChevronLeftIcon sx={{ fontSize: { xs: "18px", md: "24px" } }} /></div>
+                            <div className={`w-9 h-9 md:w-12 md:h-12 cursor-pointer border border-titan-grey flex items-center justify-center rounded-xl md:rounded-2xl hover:bg-titan-lime hover:text-black hover:border-titan-lime transition-all ${currentPage === noOfPage ? 'opacity-20 cursor-not-allowed' : ''}`} onClick={handleNext}><ChevronRightIcon sx={{ fontSize: { xs: "18px", md: "24px" } }} /></div>
                         </div>
                     </div>
                 )}
             </div>
 
             {loading ? (
-                <div className='w-full h-96 flex items-center justify-center bg-titan-dark/30 rounded-[32px] border border-titan-grey/20'>
+                <div className='w-full h-60 md:h-96 flex items-center justify-center bg-titan-dark/30 rounded-[24px] md:rounded-[32px] border border-titan-grey/20'>
                     <Loader />
                 </div>
             ) : (
                 <>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 pb-24'>
                         {data.map((item) => (
                             <MemberCard key={item._id} item={item} />
                         ))}
                     </div>
 
                     {data.length === 0 && (
-                        <div className='flex flex-col items-center justify-center mt-32 text-titan-muted'>
-                            <div className='text-8xl mb-6 opacity-20'>.T</div>
-                            <div className='text-2xl font-black uppercase tracking-widest italic opacity-50'>No operatives found</div>
+                        <div className='flex flex-col items-center justify-center mt-20 md:mt-32 text-titan-muted'>
+                            <div className='text-6xl md:text-8xl mb-4 md:mb-6 opacity-20'>.T</div>
+                            <div className='text-lg md:text-2xl font-black uppercase tracking-widest italic opacity-50'>No operatives found</div>
                         </div>
                     )}
                 </>
