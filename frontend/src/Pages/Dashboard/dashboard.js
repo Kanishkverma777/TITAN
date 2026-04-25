@@ -6,8 +6,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '../../Components/Modal/modal';
 import EditGym from '../../Components/EditGym/editGym';
+import Loader from '../../Components/Loader/loader';
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     totalMembers: 0,
     monthlyMembers: 0,
@@ -21,10 +23,13 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
         try {
+            setLoading(true);
             const response = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:4000') + '/auth/overview', { withCredentials: true });
             setStats(response.data);
+            setLoading(false);
         } catch (err) {
             console.error(err);
+            setLoading(false);
         }
     }
     fetchStats();
@@ -60,6 +65,11 @@ const Dashboard = () => {
       </div>
 
       {/* Bento Grid Stats */}
+      {loading ? (
+        <div className='w-full h-96 flex items-center justify-center bg-titan-dark/30 rounded-[32px] border border-titan-grey/20'>
+            <Loader />
+        </div>
+      ) : (
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-20'>
         
         {/* Total Members */}
@@ -118,6 +128,7 @@ const Dashboard = () => {
         </div>
 
       </div>
+      )}
 
       {editProfile && (
         <Modal 

@@ -1,14 +1,10 @@
 import React from 'react'
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+
 const Loader = () => {
   return (
-    <div className='fixed inset-0 flex justify-center items-center bg-black bg-opacity-70 z-50 backdrop-blur-sm'>
-            <Box >
-                <CircularProgress size="10rem" sx={{color:"white"}} />
-            </Box>
-        </div>
-
+    <div className='flex justify-center items-center py-20 w-full'>
+        <div className='w-14 h-14 border-[3px] border-titan-lime/20 border-t-titan-lime rounded-full animate-spin'></div>
+    </div>
   )
 }
 

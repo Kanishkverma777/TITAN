@@ -10,10 +10,12 @@ import Modal from '../../Components/Modal/modal';
 import MemberCard from '../../Components/MemberCard/memberCard';
 import AddmemberShip from '../../Components/Addmembership/addmemberShip';
 import Addmembers from '../../Components/Addmembers/addmembers';
+import Loader from '../../Components/Loader/loader';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 const Member = () => {
+    const [loading, setLoading] = useState(false);
     const [addMembership, setAddmemberShip] = useState(false);
     const [addMember, setAddmember] = useState(false)
     const [data, setData] = useState([]);
@@ -33,13 +35,16 @@ const Member = () => {
 
     const fetchData = async (skip, limits) => {
         try {
+            setLoading(true);
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/members/all-member?skip=${skip}&limit=${limits}`, { withCredentials: true });
             setData(response.data.members);
             setTotalData(response.data.totalMember);
             setIsSearchModeOn(false);
+            setLoading(false);
         } catch (err) {
             toast.error("Error fetching members");
             console.error(err);
+            setLoading(false);
         }
     }
 
@@ -69,13 +74,16 @@ const Member = () => {
             return;
         }
         try {
+            setLoading(true);
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/members/search?searchTerm=${search}`, { withCredentials: true });
             setData(response.data.members);
             setTotalData(response.data.members.length);
             setIsSearchModeOn(true);
+            setLoading(false);
         } catch (err) {
             toast.error("Search failed");
             console.error(err);
+            setLoading(false);
         }
     }
 
@@ -125,17 +133,25 @@ const Member = () => {
                 )}
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24'>
-                {data.map((item) => (
-                    <MemberCard key={item._id} item={item} />
-                ))}
-            </div>
-
-            {data.length === 0 && (
-                <div className='flex flex-col items-center justify-center mt-32 text-titan-muted'>
-                    <div className='text-8xl mb-6 opacity-20'>.T</div>
-                    <div className='text-2xl font-black uppercase tracking-widest italic opacity-50'>No operatives found</div>
+            {loading ? (
+                <div className='w-full h-96 flex items-center justify-center bg-titan-dark/30 rounded-[32px] border border-titan-grey/20'>
+                    <Loader />
                 </div>
+            ) : (
+                <>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24'>
+                        {data.map((item) => (
+                            <MemberCard key={item._id} item={item} />
+                        ))}
+                    </div>
+
+                    {data.length === 0 && (
+                        <div className='flex flex-col items-center justify-center mt-32 text-titan-muted'>
+                            <div className='text-8xl mb-6 opacity-20'>.T</div>
+                            <div className='text-2xl font-black uppercase tracking-widest italic opacity-50'>No operatives found</div>
+                        </div>
+                    )}
+                </>
             )}
 
             {addMembership && <Modal header="Titan Membership Plan" handleClose={handleMemberShip} content={<AddmemberShip handleClose={handleMemberShip} />} />}
