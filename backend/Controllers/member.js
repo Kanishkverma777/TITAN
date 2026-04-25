@@ -45,15 +45,28 @@ function addMonthsToDate(months,joiningDate) {
 exports.registerMember = async(req,res)=>{
     try{
         const {name,mobileNo,address,membership,profilePic,joiningDate} = req.body;
+        
+        // Basic validation
+        if (!name || !mobileNo || !membership) {
+            return res.status(400).json({ error: 'Missing required fields: name, mobileNo, or membership' });
+        }
+
         const existingMember = await Member.findOne({gym:req.gym._id,mobileNo});
         if(existingMember){
             return res.status(409).json({ error: 'Already registered with this Mobile No' });
         }
 
-        const memberShip = await Membership.findOne({_id:membership,gym:req.gym._id});
+        // Try to find membership, handle potential CastError
+        let memberShip;
+        try {
+            memberShip = await Membership.findOne({_id:membership,gym:req.gym._id});
+        } catch (idErr) {
+            return res.status(400).json({ error: 'Invalid Membership ID format' });
+        }
+
         if(memberShip){
             const totalMembers = await Member.countDocuments({gym:req.gym._id});
-            const memberId = `GYM-${totalMembers + 101}`; // Simple unique ID generator
+            const memberId = `GYM-${totalMembers + 101}`; 
             
             const nextBillDate = addMonthsToDate(memberShip.months, joiningDate || new Date());
             
@@ -73,12 +86,12 @@ exports.registerMember = async(req,res)=>{
             res.status(201).json({message: "Member registered successfully", member: newMember});
 
         }else{
-            return res.status(409).json({error:"No such Membership found"})
+            return res.status(404).json({error:"No such Membership found"})
         }
 
     }catch(err){
-        console.log(err)
-        res.status(500).json({ error: 'Server error' });
+        console.error("REGISTRATION ERROR:", err); // This will show in Render Logs
+        res.status(500).json({ error: 'Server error: ' + err.message });
     }
 }
 
